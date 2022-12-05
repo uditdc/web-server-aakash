@@ -22,10 +22,6 @@ jobs:
           - dockerfile: ./server-2/Dockerfile
             image: ${{ $REGISTRY }}/${{ $IMAGE_NAME }}-server-2
 
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
