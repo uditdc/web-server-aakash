@@ -19,8 +19,10 @@ jobs:
         include:
           - dockerfile: ./server-1/Dockerfile
             image: -server-1
+            context: ./server-1
           - dockerfile: ./server-2/Dockerfile
             image: -server-2
+            context: ./server-2
 
     permissions:
       contents: read
@@ -49,6 +51,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
