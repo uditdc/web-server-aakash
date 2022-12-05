@@ -1,0 +1,64 @@
+---
+version: '2.0'
+services:
+  server1:
+    image: 'ghcr.io/uditdc/web-server-aakash-server-1:v0.0.7'
+    env:
+      - SERVER_HOST=server2
+      - SERVER_PORT=3001
+    expose:
+      - port: 3000
+        as: 80
+        to:
+          - global: true
+    depends_on:
+        -server2
+  server2:
+    image: 'ghcr.io/uditdc/web-server-aakash-server-2:v0.0.7'
+    env:
+      - SERVER_HOST=server1
+      - SERVER_PORT=3000
+    expose:
+      - port: 3001
+        as: 80
+        to:
+          - global: true
+      - port: 3001
+        to:
+          - service: server1
+profiles:
+  compute:
+    server1:
+      resources:
+        cpu:
+          units: 0.1
+        memory:
+          size: 512Mi
+        storage:
+          - size: 512Mi
+    server2:
+      resources:
+        cpu:
+          units: 0.1
+        memory:
+          size: 512Mi
+        storage:
+          - size: 512Mi
+  placement:
+    dcloud:
+      pricing:
+        server1:
+          denom: uakt
+          amount: 1000
+        server2:
+          denom: uakt
+          amount: 1000
+deployment:
+  server1:
+    dcloud:
+      profile: server1
+      count: 1
+  server2:
+    dcloud:
+      profile: server2
+      count: 1
