@@ -13,6 +13,19 @@ jobs:
   docker:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./server-1/Dockerfile
+            image: -server-1
+          - dockerfile: ./server-2/Dockerfile
+            image: -server-2
+
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -28,7 +41,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server-1
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}${{ matrix.image }}
       
       - name: install modules
         run: npm i
@@ -37,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./server-2/Dockerfile
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
