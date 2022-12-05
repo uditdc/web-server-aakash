@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start:1": "cd ./server-1 && npm start",
+    "start:2": "cd ./server-2 && npm start"
+  },
+  "private": true,
+  "workspaces": [
+    "server-1",
+    "server-2"
+  ],
+  "dependencies": {
+    "fastify": "^4.10.2"
+  },
+  "version": "0.0.0"
+}
