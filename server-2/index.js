@@ -8,9 +8,8 @@ fastify.get('/', (request, reply) => {
   reply.send({ hello: 'world', server: '2' })
 })
 
-
 fastify.get('/server', async (request, reply) => {
-  const serverResponse = await axios.get('http://localhost:3000')
+  const serverResponse = await axios.get(`http://${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || 3000}`)
   reply.send(serverResponse.data)
 })
 
