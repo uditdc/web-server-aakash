@@ -9,7 +9,7 @@ fastify.get('/', (request, reply) => {
 })
 
 fastify.get('/server', async (request, reply) => {
-  const serverResponse = await axios.get('http://0.0.0.0:3001')
+  const serverResponse = await axios.get('http://localhost:3001')
   reply.send(serverResponse.data)
 })
 
