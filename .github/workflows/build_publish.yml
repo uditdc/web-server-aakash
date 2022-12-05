@@ -3,6 +3,7 @@ name: build and publish
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -17,9 +18,9 @@ jobs:
       matrix:
         include:
           - dockerfile: ./server-1/Dockerfile
-            image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server-1
+            image: ${{ $REGISTRY }}/${{ $IMAGE_NAME }}-server-1
           - dockerfile: ./server-2/Dockerfile
-            image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server-2
+            image: ${{ $REGISTRY }}/${{ $IMAGE_NAME }}-server-2
 
     permissions:
       contents: read
@@ -32,7 +33,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ $REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
