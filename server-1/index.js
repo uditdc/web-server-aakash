@@ -6,7 +6,7 @@ const fastify = require('fastify')({
 
 // Declare a route
 fastify.get('/', async (request, reply) => {
-  const provider = new ethers.providers.WebSocketProvider('wss://fabled-shy-patina.bsc.discover.quiknode.pro/9fb4721397ddd03b1e9506cdbd828a5d6b05bfaf/')
+  const provider = new ethers.providers.WebSocketProvider(process.env.WS_HOST)
   reply.send({ hello: 'world', server: '1', blockNumber: await provider.getBlockNumber() })
 })
 
