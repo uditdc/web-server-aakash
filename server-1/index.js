@@ -1,11 +1,13 @@
+const ethers = require('ethers')
 const axios = require('axios')
 const fastify = require('fastify')({
   logger: true
 })
 
 // Declare a route
-fastify.get('/', (request, reply) => {
-  reply.send({ hello: 'world', server: '1' })
+fastify.get('/', async (request, reply) => {
+  const provider = new ethers.providers.WebSocketProvider('wss://fabled-shy-patina.bsc.discover.quiknode.pro/9fb4721397ddd03b1e9506cdbd828a5d6b05bfaf/')
+  reply.send({ hello: 'world', server: '1', blockNumber: await provider.getBlockNumber() })
 })
 
 fastify.get('/server', async (request, reply) => {

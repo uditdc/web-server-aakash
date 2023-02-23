@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "fastify": "^4.10.2",
-    "axios": "^1.2.0"
+    "axios": "^1.2.0",
+    "ethers": "^5.7.2",
+    "fastify": "^4.10.2"
   }
 }
