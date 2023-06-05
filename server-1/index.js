@@ -1,7 +1,21 @@
 const ethers = require('ethers')
 const axios = require('axios')
+const fastifyEnv = require('@fastify/env')
 const fastify = require('fastify')({
   logger: true
+})
+
+fastify.register(fastifyEnv, {
+  schema: {
+    type: 'object',
+    required: ['WS_HOST', 'SERVER_HOST', 'SERVER_PORT'],
+    properties: {
+      WS_HOST: { type: 'string' },
+      SERVER_HOST: { type: 'string' },
+      SERVER_PORT: { type: 'number' }
+    }
+  },
+  dotenv: true
 })
 
 // Declare a route
